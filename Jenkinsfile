@@ -21,12 +21,12 @@ pipeline {
             }
         }
     }
-
+    
     post {
         failure {
             mail to: 'asantiag1@stevens.edu',
-                subject: "Failed Pipeline ${currentBuild.fullDisplayName}"
-                body: "Build failed. Check ${env.BUILD_URL}"
+                 subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                 body: "Build failed. Check ${env.BUILD_URL}"
         }
     }
 }
