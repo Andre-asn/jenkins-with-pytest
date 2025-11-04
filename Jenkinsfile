@@ -11,7 +11,7 @@ pipeline {
         
         stage('Run tests') {
             steps {
-                sh './venv/bin/pytest --junitxml=report.xml'
+                sh './venv/bin/pytest --junitxml=report.xml --cov=. --cov-report=html'
             }
         }
         
@@ -19,6 +19,14 @@ pipeline {
             steps {
                 junit 'report.xml'
             }
+        }
+    }
+
+    post {
+        failure {
+            mail to: 'asantiag1@stevens.edu',
+                subject: "Failed Pipeline ${currentBuild.fullDisplayName}"
+                body: "Build failed. Check ${env.BUILD_URL}"
         }
     }
 }
